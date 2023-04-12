@@ -1,3 +1,8 @@
 .check-input{
     border-color: red;
+    .check-input::after {
+  
+        content: "Reference ";
+      }
+   
 }

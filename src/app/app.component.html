@@ -13,31 +13,58 @@
         <img src="../assets/image.png" alt="" class="mt-5" />
       </div>
       <h3 class="m-5 fw-bold">Register</h3>
-      <form [formGroup]="registration" class="m-5" >
+      <form [formGroup]="registration" class="m-5" (ngSubmit)="onSubmit()" >
         <div class="d-flex flex-row">
+          <!-- First Name -->
           <div class="mb-3 me-3 w-50">
             <label for="firstName" class="form-label" >First Name</label>
-            <input type="text" class="form-control" id="firstName" formControlName="fname" required
-            [ngClass]="{'check-input': registration.get('fname')?.invalid && registration.get('fname')?.touched}"/>
-            <!-- <small *ngIf="registration.get('registration.fname').errors['required']">this field is required</small> -->
+            <input type="text" class="form-control" id="firstName" formControlName="fname"/>
+            <div   *ngIf=" registration.get('fname')?.invalid && registration.get('fname')?.touched"
+            >
+            <span  class="text-danger"*ngIf="registration.get('fname')?.errors &&    registration.get('fname')?.hasError('required')">*this field is required</span>
+            <span  class="text-danger"*ngIf="registration.get('fname')?.hasError('pattern')">* please enter correct name</span>
+            <span  class="text-danger"*ngIf="registration.get('fname')?.hasError('minlength')">*minLength</span>
           </div>
+        </div>
+            <!-- Last Name -->
           <div class="mb-3 w-50">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" required formControlName="lname"
-            [ngClass]="{'check-input': registration.get('lname')?.invalid && registration.get('lname')?.touched}"/>
+            <input type="text" class="form-control" id="lastName" required formControlName="lname"/>
+            <div   *ngIf=" registration.get('lname')?.invalid && registration.get('lname')?.touched">
+            <span  class="text-danger"*ngIf="registration.get('lname')?.errors &&    registration.get('lname')?.hasError('required')">*this field is required</span>
+            <span  class="text-danger"*ngIf="registration.get('lname')?.hasError('pattern')">* please enter correct name</span>
+            <span  class="text-danger"*ngIf="registration.get('lname')?.hasError('minlength')">* minLength</span>
+          </div>
           </div>
         </div>
+         <!-- Email -->
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
-          <div id="emailHelp" class="form-text">
-            We'll never share your email with anyone else.
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email"/>
+          <div *ngIf=" registration.get('email')?.invalid && registration.get('email')?.touched">
+            <span  class="text-danger"*ngIf="registration.get('email')?.errors &&    registration.get('email')?.hasError('required')">*this field is required</span>
+            <span  class="text-danger"*ngIf="registration.get('email')?.hasError('email')">* please use @ in your email</span>
           </div>
         </div>
+        <!-- Password -->
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" required/>
+          <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password" name="password"/>
+          <div   *ngIf=" registration.get('password')?.invalid && registration.get('password')?.touched">
+            <span  class="text-danger"*ngIf="registration.get('password')?.errors &&    registration.get('password')?.hasError('required')">*this field is required</span>
+            <span  class="text-danger"*ngIf="registration.get('password')?.hasError('minLength')">*password must be atleast 8 character</span>
+          </div>
         </div>
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword2" formControlName="repass" name="repass"/>
+          <div   *ngIf=" registration.get('repass')?.invalid && registration.get('repass')?.touched">
+            <span  class="text-danger"*ngIf="registration.get('repass')?.errors &&    registration.get('repass')?.hasError('required')">*this field is required</span>
+            <span  class="text-danger"*ngIf="registration.get('repass')?.hasError('mustMatch')">*password didn't match</span>
+          </div>
+        </div>
+
         <div class="form-check form-switch mb-3">
           <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
           <label class="form-check-label" for="flexSwitchCheckChecked">I accept the <span class="text-primary">Terms of
